@@ -317,8 +317,20 @@ with m.db as db:
                                         @bot.callback_query_handler(func=lambda call: call.data == "yes✨")
                                         def callHandler2(xny):
                                                 if xny.data == 'yes✨':
-                                                        markupyes = types.ReplyKeyboardMarkup(resize_keyboard=True)
-                                                        bot.send_message(xny.message.chat.id,'Выберите дату записи9',reply_markup=markupyes)
+                                                        markupyes = types.InlineKeyboardMarkup()
+                                                        b = m.Session_date.select(m.Session_date.date).dicts().execute()
+                                                        for i in b:
+                                                                print(i)
+                                                        for i in b:
+                                                                     markupyes.add(types.InlineKeyboardButton(text= i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1],callback_data=i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1] ))  
+                                                        bot.send_message(xny.message.chat.id,'Выберите дату записи  $',reply_markup=markupyes)
+                                                        @bot.callback_query_handler(func=lambda call: True)
+                                                        def date_to_zapis(call):
+                                                                for i in b:
+                                                                        if call.data == i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1]:
+                                                                                k = m.Zapis(Date_time = call.data, procedures_id = '1', master_id = '1', client_id = call.from_user.id)
+                                                                                k.save()
+                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()                                                                  
                                                 elif xny.data == 'no':
                                                         pass 
                 elif name == message.from_user.first_name and message.text == 'Ресницы👁':
@@ -349,8 +361,20 @@ with m.db as db:
                                         @bot.callback_query_handler(func=lambda call: call.data == "yes👌")
                                         def callHandler3(res):
                                                 if res.data == 'yes👌':
-                                                        markupyes = types.ReplyKeyboardMarkup(resize_keyboard=True)
-                                                        bot.send_message(res.message.chat.id,'Выберите дату записи1',reply_markup=markupyes)
+                                                        markupyes = types.InlineKeyboardMarkup()
+                                                        b = m.Session_date.select(m.Session_date.date).dicts().execute()
+                                                        for i in b:
+                                                                print(i)
+                                                        for i in b:
+                                                                     markupyes.add(types.InlineKeyboardButton(text= i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1],callback_data=i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1] ))  
+                                                        bot.send_message(res.message.chat.id,'Выберите дату записи  $',reply_markup=markupyes)
+                                                        @bot.callback_query_handler(func=lambda call: True)
+                                                        def date_to_zapis(call):
+                                                                for i in b:
+                                                                        if call.data == i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1]:
+                                                                                k = m.Zapis(Date_time = call.data, procedures_id = '1', master_id = '1', client_id = call.from_user.id)
+                                                                                k.save()
+                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()                                                                  
                                                 elif res.data == 'no':
                                                         pass 
                 elif name == message.from_user.first_name and message.text == 'Объёмное наращивание ресниц👁':
@@ -372,8 +396,20 @@ with m.db as db:
                                         @bot.callback_query_handler(func=lambda call: call.data == "yes😮")
                                         def callHandler4(obres):
                                                 if obres.data == 'yes😮':
-                                                        markupyes = types.ReplyKeyboardMarkup(resize_keyboard=True)
-                                                        bot.send_message(obres.message.chat.id,'Выберите дату записи2',reply_markup=markupyes)
+                                                        markupyes = types.InlineKeyboardMarkup()
+                                                        b = m.Session_date.select(m.Session_date.date).dicts().execute()
+                                                        for i in b:
+                                                                print(i)
+                                                        for i in b:
+                                                                     markupyes.add(types.InlineKeyboardButton(text= i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1],callback_data=i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1] ))  
+                                                        bot.send_message(obres.message.chat.id,'Выберите дату записи  $',reply_markup=markupyes)
+                                                        @bot.callback_query_handler(func=lambda call: True)
+                                                        def date_to_zapis(call):
+                                                                for i in b:
+                                                                        if call.data == i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1]:
+                                                                                k = m.Zapis(Date_time = call.data, procedures_id = '1', master_id = '1', client_id = call.from_user.id)
+                                                                                k.save()
+                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()                                                                  
                                                 elif obres.data == 'no':
                                                         pass 
                 elif name == message.from_user.first_name and message.text == 'Снятие ресниц👁':
@@ -394,8 +430,20 @@ with m.db as db:
                                         @bot.callback_query_handler(func=lambda call: call.data == "yes🙂")
                                         def callHandler5(snres):
                                                 if snres.data == 'yes🙂':
-                                                        markupyes = types.ReplyKeyboardMarkup(resize_keyboard=True)
-                                                        bot.send_message(snres.message.chat.id,'Выберите дату записи6',reply_markup=markupyes)
+                                                        markupyes = types.InlineKeyboardMarkup()
+                                                        b = m.Session_date.select(m.Session_date.date).dicts().execute()
+                                                        for i in b:
+                                                                print(i)
+                                                        for i in b:
+                                                                     markupyes.add(types.InlineKeyboardButton(text= i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1],callback_data=i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1] ))  
+                                                        bot.send_message(snres.message.chat.id,'Выберите дату записи  $',reply_markup=markupyes)
+                                                        @bot.callback_query_handler(func=lambda call: True)
+                                                        def date_to_zapis(call):
+                                                                for i in b:
+                                                                        if call.data == i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1]:
+                                                                                k = m.Zapis(Date_time = call.data, procedures_id = '1', master_id = '1', client_id = call.from_user.id)
+                                                                                k.save()
+                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()                                                                  
                                                 elif snres.data == 'no':
                                                         pass 
                 elif name == message.from_user.first_name and message.text == 'Педикюр🦶':
@@ -426,8 +474,20 @@ with m.db as db:
                                         @bot.callback_query_handler(func=lambda call: call.data == "yes😕")
                                         def callHandler6(pedbez):
                                                 if pedbez.data == 'yes😕':
-                                                        markupyes = types.ReplyKeyboardMarkup(resize_keyboard=True)
-                                                        bot.send_message(pedbez.message.chat.id,'Выберите дату записи7',reply_markup=markupyes)
+                                                        markupyes = types.InlineKeyboardMarkup()
+                                                        b = m.Session_date.select(m.Session_date.date).dicts().execute()
+                                                        for i in b:
+                                                                print(i)
+                                                        for i in b:
+                                                                     markupyes.add(types.InlineKeyboardButton(text= i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1],callback_data=i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1] ))  
+                                                        bot.send_message(pedbez.message.chat.id,'Выберите дату записи  $',reply_markup=markupyes)
+                                                        @bot.callback_query_handler(func=lambda call: True)
+                                                        def date_to_zapis(call):
+                                                                for i in b:
+                                                                        if call.data == i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1]:
+                                                                                k = m.Zapis(Date_time = call.data, procedures_id = '1', master_id = '1', client_id = call.from_user.id)
+                                                                                k.save()
+                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()                                                                  
                                                 elif pedbez.data == 'no':
                                                         pass 
                 elif name == message.from_user.first_name and message.text == 'Педикюр с покрытием🦶':
@@ -449,8 +509,20 @@ with m.db as db:
                                         @bot.callback_query_handler(func=lambda call: call.data == "yes🙃")
                                         def callHandler7(peds):
                                                 if peds.data == 'yes🙃':
-                                                        markupyes = types.ReplyKeyboardMarkup(resize_keyboard=True)
-                                                        bot.send_message(peds.message.chat.id,'Выберите дату записи7',reply_markup=markupyes)
+                                                        markupyes = types.InlineKeyboardMarkup()
+                                                        b = m.Session_date.select(m.Session_date.date).dicts().execute()
+                                                        for i in b:
+                                                                print(i)
+                                                        for i in b:
+                                                                     markupyes.add(types.InlineKeyboardButton(text= i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1],callback_data=i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1] ))  
+                                                        bot.send_message(peds.message.chat.id,'Выберите дату записи  $',reply_markup=markupyes)
+                                                        @bot.callback_query_handler(func=lambda call: True)
+                                                        def date_to_zapis(call):
+                                                                for i in b:
+                                                                        if call.data == i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1]:
+                                                                                k = m.Zapis(Date_time = call.data, procedures_id = '1', master_id = '1', client_id = call.from_user.id)
+                                                                                k.save()
+                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()                                                                  
                                                 elif peds.data == 'no':
                                                         pass 
                 elif name == message.from_user.first_name and message.text == 'Снятие педикюра🦶':
@@ -471,8 +543,20 @@ with m.db as db:
                                         @bot.callback_query_handler(func=lambda call: call.data == "yes😖")
                                         def callHandler8(pedsn):
                                                 if pedsn.data == 'yes😖':
-                                                        markupyes = types.ReplyKeyboardMarkup(resize_keyboard=True)
-                                                        bot.send_message(pedsn.message.chat.id,'Выберите дату записи0',reply_markup=markupyes)
+                                                        markupyes = types.InlineKeyboardMarkup()
+                                                        b = m.Session_date.select(m.Session_date.date).dicts().execute()
+                                                        for i in b:
+                                                                print(i)
+                                                        for i in b:
+                                                                     markupyes.add(types.InlineKeyboardButton(text= i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1],callback_data=i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1] ))  
+                                                        bot.send_message(pedsn.message.chat.id,'Выберите дату записи  $',reply_markup=markupyes)
+                                                        @bot.callback_query_handler(func=lambda call: True)
+                                                        def date_to_zapis(call):
+                                                                for i in b:
+                                                                        if call.data == i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1]:
+                                                                                k = m.Zapis(Date_time = call.data, procedures_id = '1', master_id = '1', client_id = call.from_user.id)
+                                                                                k.save()
+                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()                                                                  
                                                 elif pedsn.data == 'no':
                                                         pass 
                 elif name == message.from_user.first_name and message.text == 'Маникюр💅':
@@ -503,8 +587,20 @@ with m.db as db:
                                         @bot.callback_query_handler(func=lambda call: call.data == "yes👅")
                                         def callHandler9(manikbez):
                                                 if manikbez.data == 'yes👅':
-                                                        markupyes = types.ReplyKeyboardMarkup(resize_keyboard=True)
-                                                        bot.send_message(manikbez.message.chat.id,'Выберите дату записи=',reply_markup=markupyes)
+                                                        markupyes = types.InlineKeyboardMarkup()
+                                                        b = m.Session_date.select(m.Session_date.date).dicts().execute()
+                                                        for i in b:
+                                                                print(i)
+                                                        for i in b:
+                                                                     markupyes.add(types.InlineKeyboardButton(text= i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1],callback_data=i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1] ))  
+                                                        bot.send_message(manikbez.message.chat.id,'Выберите дату записи  $',reply_markup=markupyes)
+                                                        @bot.callback_query_handler(func=lambda call: True)
+                                                        def date_to_zapis(call):
+                                                                for i in b:
+                                                                        if call.data == i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1]:
+                                                                                k = m.Zapis(Date_time = call.data, procedures_id = '1', master_id = '1', client_id = call.from_user.id)
+                                                                                k.save()
+                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()                                                                  
                                                 elif manikbez.data == 'no':
                                                         pass 
                 elif name == message.from_user.first_name and message.text == 'Маникюр с покрытием💅':
@@ -526,8 +622,20 @@ with m.db as db:
                                         @bot.callback_query_handler(func=lambda call: call.data == "yes🦷")
                                         def callHandler10(maniks):
                                                 if maniks.data == 'yes🦷':
-                                                        markupyes = types.ReplyKeyboardMarkup(resize_keyboard=True)
-                                                        bot.send_message(maniks.message.chat.id,'Выберите дату записи+',reply_markup=markupyes)
+                                                        markupyes = types.InlineKeyboardMarkup()
+                                                        b = m.Session_date.select(m.Session_date.date).dicts().execute()
+                                                        for i in b:
+                                                                print(i)
+                                                        for i in b:
+                                                                     markupyes.add(types.InlineKeyboardButton(text= i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1],callback_data=i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1] ))  
+                                                        bot.send_message(maniks.message.chat.id,'Выберите дату записи  $',reply_markup=markupyes)
+                                                        @bot.callback_query_handler(func=lambda call: True)
+                                                        def date_to_zapis(call):
+                                                                for i in b:
+                                                                        if call.data == i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1]:
+                                                                                k = m.Zapis(Date_time = call.data, procedures_id = '1', master_id = '1', client_id = call.from_user.id)
+                                                                                k.save()
+                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()                                                                  
                                                 elif maniks.data == 'no':
                                                         pass 
                 elif name == message.from_user.first_name and message.text == 'Снятие маникюра💅':
@@ -545,11 +653,22 @@ with m.db as db:
                                         maniksn_no = types.InlineKeyboardButton(text='Нет', callback_data = 'no')
                                         maniksn_inline.add(maniksn_yes,maniksn_no)
                                         bot.send_message(message.chat.id,'Вы хотите записаться на данную процедуру?', reply_markup=maniksn_inline)
-                                        @bot.callback_query_handler(func=lambda call: call.data == "yes🧠")
                                         def callHandler11(maniksn):
                                                 if maniksn.data == 'yes🧠':
-                                                        markupyes = types.ReplyKeyboardMarkup(resize_keyboard=True)
-                                                        bot.send_message(maniksn.message.chat.id,'Выберите дату записи-',reply_markup=markupyes)
+                                                        markupyes = types.InlineKeyboardMarkup()
+                                                        b = m.Session_date.select(m.Session_date.date).dicts().execute()
+                                                        for i in b:
+                                                                print(i)
+                                                        for i in b:
+                                                                     markupyes.add(types.InlineKeyboardButton(text= i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1],callback_data=i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1] ))  
+                                                        bot.send_message(maniksn.message.chat.id,'Выберите дату записи  $',reply_markup=markupyes)
+                                                        @bot.callback_query_handler(func=lambda call: True)
+                                                        def date_to_zapis(call):
+                                                                for i in b:
+                                                                        if call.data == i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1]:
+                                                                                k = m.Zapis(Date_time = call.data, procedures_id = '1', master_id = '1', client_id = call.from_user.id)
+                                                                                k.save()
+                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()                                                                  
                                                 elif maniksn.data == 'no':
                                                         pass 
         bot.polling(none_stop=True)
