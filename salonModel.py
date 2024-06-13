@@ -67,7 +67,6 @@ class Zapis(BaseModel):
 
 class Session_date(BaseModel):
     date = p.DateTimeField()
-    status = p.BooleanField()
     class Meta:
        table_name='Session_date'
 

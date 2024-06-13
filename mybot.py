@@ -2,15 +2,16 @@ import telebot
 import datetime as dt
 import salonModel as m
 from telebot import types
+import re
 with m.db as db:
         bot = telebot.TeleBot('7014214276:AAGt1g15BSNz7YYzXNWxGmf3R83VAXMiHSk')
         @bot.message_handler(commands=['start'])
         def hi(message):
                 markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width= 1)
                 menua = types.KeyboardButton('Меню')
-                menuadm = types.KeyboardButton('Меню администратора')
+   #             menuadm = types.KeyboardButton('Меню администратора')
                 menumaster = types.KeyboardButton('Меню мастера')
-                markup.add(menua,menuadm,menumaster)
+                markup.add(menua,menumaster)
                 bot.send_message(message.chat.id,'Привет это бот для записи в салон красоты', reply_markup=markup)
         @bot.message_handler(content_types=['contact'])
         def contact(message):
@@ -38,26 +39,43 @@ with m.db as db:
                 elif message.text == 'Выйти из меню':
                         markup2 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width= 1)
                         menua = types.KeyboardButton('Меню')
-                        menuadm = types.KeyboardButton('Меню администратора')
+       #                 menuadm = types.KeyboardButton('Меню администратора')
                         menumaster = types.KeyboardButton('Меню мастера')
-                        markup2.add(menua,menuadm,menumaster)
+                        markup2.add(menua,menumaster)
                         bot.send_message(message.chat.id,'Вы вышли из меню',reply_markup=markup2)
-                elif message.text == 'Меню администратора':
-                        markup2adm = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width= 1)
-                        naz = types.KeyboardButton('Назад')
-                        markup2adm.add(naz)
-                        bot.send_message(message.chat.id,'Здравствуй',reply_markup=markup2adm)
                 elif message.text == 'Меню мастера':
                         markup2mas = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width= 1)
                         naz = types.KeyboardButton('Назад')
-                        markup2mas.add(naz)
-                        bot.send_message(message.chat.id,'Выберите активные записи',reply_markup=markup2mas)
+                        rab_vrem = types.KeyboardButton('Рабочее время')
+                        zapisi = types.KeyboardButton('Активные записи')
+                        markup2mas.add(naz,rab_vrem,zapisi)
+                        bot.send_message(message.chat.id,'Выберите нужную функцию',reply_markup=markup2mas)
+                elif message.text == 'Активные записи':
+                        markup2mas = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width= 1)
+                        naz = types.KeyboardButton('Назад')
+                        rab_vrem = types.KeyboardButton('Рабочее время')
+                        markup2mas.add(naz,rab_vrem)
+                        bot.send_message(message.chat.id,'Выберите нужную функцию',reply_markup=markup2mas)
+                elif message.text == 'Рабочее время':
+                        markup2mas = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width= 1)
+                        naz = types.KeyboardButton('Назад')
+                        pattern = r"\d\d\d\d/\d\d?/\d\d? \d\d?:\d\d?"
+                        #match = re.search(pattern, message.text)
+                        zapisi = types.KeyboardButton('Активные записи')
+                        markup2mas.add(naz,zapisi)
+                        bot.send_message(message.chat.id,'Введите дату и время записи в виде:"ГГГГ/ММ/ДД ЧЧ:ММ"',reply_markup=markup2mas)
+                        if re.findall(pattern,message.text) is not None:
+                                k = m.Session_date(date = message.text)
+                                k.save()
+                                bot.send_message(message.chat.id,'Запись добавлена')
+                        else:
+                                print (1)
                 elif message.text == 'Назад':
                         markup2naz = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width= 1)
                         menua = types.KeyboardButton('Меню')
-                        menuadm = types.KeyboardButton('Меню администратора')
+    #                    menuadm = types.KeyboardButton('Меню администратора')
                         menumaster = types.KeyboardButton('Меню мастера')
-                        markup2naz.add(menua,menuadm,menumaster)
+                        markup2naz.add(menua,menumaster)
                         bot.send_message(message.chat.id,'Вы вернулись',reply_markup=markup2naz)
                 elif message.text == 'Список процедур':
                         markup3 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width= 1)
@@ -409,7 +427,7 @@ with m.db as db:
                                                                         if call.data == i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1]:
                                                                                 k = m.Zapis(Date_time = call.data, procedures_id = '1', master_id = '1', client_id = call.from_user.id)
                                                                                 k.save()
-                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()                                                                  
+                                                                                d =  m.Session_date.delete().where(m.Session_date.date == call.data).execute()                                                                 
                                                 elif obres.data == 'no':
                                                         pass 
                 elif name == message.from_user.first_name and message.text == 'Снятие ресниц👁':
