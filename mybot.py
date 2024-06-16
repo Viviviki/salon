@@ -72,7 +72,7 @@ with m.db as db:
                                                         bot.send_message(vrem.message.chat.id,'Активные записи на данный момент',reply_markup=markupyes)
                                                 elif vrem.data == 'no':
                                                         pass                      
-                elif message.text == 'Рабочее время':
+                elif message.text == 'Добавление рабочего времени':
                         markup2mas = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width= 1)
                         naz = types.KeyboardButton('Назад')
                         # pattern =r"\d\d\d\d/\d\d?/\d\d? \d\d?:\d\d?" 
@@ -318,7 +318,7 @@ with m.db as db:
                                                                 print(i)
                                                         for i in b:
                                                                      markupyes.add(types.InlineKeyboardButton(text= i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1],callback_data=i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1] ))  
-                                                        bot.send_message(korbrov.message.chat.id,'Выберите дату записи  $',reply_markup=markupyes)
+                                                        bot.send_message(korbrov.message.chat.id,'Выберите дату записи :',reply_markup=markupyes)
                                                         @bot.callback_query_handler(func=lambda call: True)
                                                         def date_to_zapis(call):
                                                                 for i in b:
@@ -362,7 +362,7 @@ with m.db as db:
                                                                 print(i)
                                                         for i in b:
                                                                      markupyes.add(types.InlineKeyboardButton(text= i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1],callback_data=i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1] ))  
-                                                        bot.send_message(xny.message.chat.id,'Выберите дату записи  $',reply_markup=markupyes)
+                                                        bot.send_message(xny.message.chat.id,'Выберите дату записи :',reply_markup=markupyes)
                                                         @bot.callback_query_handler(func=lambda call: True)
                                                         def date_to_zapis(call):
                                                                 for i in b:
@@ -407,7 +407,7 @@ with m.db as db:
                                                                 print(i)
                                                         for i in b:
                                                                      markupyes.add(types.InlineKeyboardButton(text= i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1],callback_data=i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1] ))  
-                                                        bot.send_message(res.message.chat.id,'Выберите дату записи  $',reply_markup=markupyes)
+                                                        bot.send_message(res.message.chat.id,'Выберите дату записи :',reply_markup=markupyes)
                                                         @bot.callback_query_handler(func=lambda call: True)
                                                         def date_to_zapis(call):
                                                                 for i in b:
@@ -444,7 +444,7 @@ with m.db as db:
                                                                 print(i)
                                                         for i in b:
                                                                      markupyes.add(types.InlineKeyboardButton(text= i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1],callback_data=i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1] ))  
-                                                        bot.send_message(obres.message.chat.id,'Выберите дату записи  $',reply_markup=markupyes)
+                                                        bot.send_message(obres.message.chat.id,'Выберите дату записи :',reply_markup=markupyes)
                                                         @bot.callback_query_handler(func=lambda call: True)
                                                         def date_to_zapis(call):
                                                                 for i in b:
@@ -479,7 +479,7 @@ with m.db as db:
                                                                 print(i)
                                                         for i in b:
                                                                      markupyes.add(types.InlineKeyboardButton(text= i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1],callback_data=i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1] ))  
-                                                        bot.send_message(snres.message.chat.id,'Выберите дату записи  $',reply_markup=markupyes)
+                                                        bot.send_message(snres.message.chat.id,'Выберите дату записи :',reply_markup=markupyes)
                                                         @bot.callback_query_handler(func=lambda call: True)
                                                         def date_to_zapis(call):
                                                                 for i in b:
@@ -524,7 +524,7 @@ with m.db as db:
                                                                 print(i)
                                                         for i in b:
                                                                      markupyes.add(types.InlineKeyboardButton(text= i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1],callback_data=i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1] ))  
-                                                        bot.send_message(pedbez.message.chat.id,'Выберите дату записи  $',reply_markup=markupyes)
+                                                        bot.send_message(pedbez.message.chat.id,'Выберите дату записи  :',reply_markup=markupyes)
                                                         @bot.callback_query_handler(func=lambda call: True)
                                                         def date_to_zapis(call):
                                                                 for i in b:
@@ -560,7 +560,7 @@ with m.db as db:
                                                                 print(i)
                                                         for i in b:
                                                                      markupyes.add(types.InlineKeyboardButton(text= i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1],callback_data=i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1] ))  
-                                                        bot.send_message(peds.message.chat.id,'Выберите дату записи  $',reply_markup=markupyes)
+                                                        bot.send_message(peds.message.chat.id,'Выберите дату записи  :',reply_markup=markupyes)
                                                         @bot.callback_query_handler(func=lambda call: True)
                                                         def date_to_zapis(call):
                                                                 for i in b:
@@ -595,7 +595,7 @@ with m.db as db:
                                                                 print(i)
                                                         for i in b:
                                                                      markupyes.add(types.InlineKeyboardButton(text= i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1],callback_data=i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1] ))  
-                                                        bot.send_message(pedsn.message.chat.id,'Выберите дату записи  $',reply_markup=markupyes)
+                                                        bot.send_message(pedsn.message.chat.id,'Выберите дату записи  :',reply_markup=markupyes)
                                                         @bot.callback_query_handler(func=lambda call: True)
                                                         def date_to_zapis(call):
                                                                 for i in b:
@@ -640,7 +640,7 @@ with m.db as db:
                                                                 print(i)
                                                         for i in b:
                                                                      markupyes.add(types.InlineKeyboardButton(text= i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1],callback_data=i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1] ))  
-                                                        bot.send_message(manikbez.message.chat.id,'Выберите дату записи  $',reply_markup=markupyes)
+                                                        bot.send_message(manikbez.message.chat.id,'Выберите дату записи :',reply_markup=markupyes)
                                                         @bot.callback_query_handler(func=lambda call: True)
                                                         def date_to_zapis(call):
                                                                 for i in b:
@@ -676,7 +676,7 @@ with m.db as db:
                                                                 print(i)
                                                         for i in b:
                                                                      markupyes.add(types.InlineKeyboardButton(text= i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1],callback_data=i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1] ))  
-                                                        bot.send_message(maniks.message.chat.id,'Выберите дату записи  $',reply_markup=markupyes)
+                                                        bot.send_message(maniks.message.chat.id,'Выберите дату записи :',reply_markup=markupyes)
                                                         @bot.callback_query_handler(func=lambda call: True)
                                                         def date_to_zapis(call):
                                                                 for i in b:
