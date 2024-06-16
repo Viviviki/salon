@@ -10,14 +10,15 @@ with m.db as db:
                 markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width= 1)
                 menua = types.KeyboardButton('Меню')
    #             menuadm = types.KeyboardButton('Меню администратора')
-                menumaster = types.KeyboardButton('Меню мастера')
-                markup.add(menua,menumaster)
+   #             menumaster = types.KeyboardButton('Меню мастера')
+                markup.add(menua)
                 bot.send_message(message.chat.id,'Привет это бот для записи в салон красоты', reply_markup=markup)
         @bot.message_handler(content_types=['contact'])
         def contact(message):
                 if message.contact is not None:
                         global name
                         name = message.contact.first_name
+                        global number
                         number = message.contact.phone_number
                         print(message.from_user.id)
                         a = m.Client(nomer = number, name = name)
@@ -25,8 +26,10 @@ with m.db as db:
                         markup1 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width= 1)
                         info = types.KeyboardButton('Список процедур📜')
                         info2 = types.KeyboardButton('Вернуться в меню')
-                        markup1.add(info,info2)
-                        bot.send_message(message.chat.id,'Выберите процедуру для записи',reply_markup=markup1) 
+                        menumaster = types.KeyboardButton('Меню мастера')
+                        markup1.add(info,info2,menumaster)
+                        bot.send_message(message.chat.id,'Выберите процедуру для записи',reply_markup=markup1)
+try:
         @bot.message_handler(content_types=['text'])
         def menu(message):
                 if message.text == 'Меню':
@@ -40,62 +43,13 @@ with m.db as db:
                         markup2 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width= 1)
                         menua = types.KeyboardButton('Меню')
        #                 menuadm = types.KeyboardButton('Меню администратора')
-                        menumaster = types.KeyboardButton('Меню мастера')
-                        markup2.add(menua,menumaster)
+       #                 menumaster = types.KeyboardButton('Меню мастера')
+                        markup2.add(menua)
                         bot.send_message(message.chat.id,'Вы вышли из меню',reply_markup=markup2)
-                elif message.text == 'Меню мастера':
-                        markup2mas = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width= 1)
-                        naz = types.KeyboardButton('Назад')
-                        rab_vrem = types.KeyboardButton('Рабочее время')
-                        zapisi = types.KeyboardButton('Активные записи')
-                        markup2mas.add(naz,rab_vrem,zapisi)
-                        bot.send_message(message.chat.id,'Выберите нужную функцию',reply_markup=markup2mas)
-                elif message.text == 'Активные записи':
-                        markup2mas = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width= 1)
-                        naz = types.KeyboardButton('Назад')
-                        rab_vrem = types.KeyboardButton('Рабочее время')
-                        vrem_inline = types.InlineKeyboardMarkup()
-                        vrem_yes = types.InlineKeyboardButton(text='Да', callback_data = 'yes👳🏽‍♂️')
-                        vrem_no = types.InlineKeyboardButton(text='Нет', callback_data = 'no')
-                        vrem_inline.add(vrem_yes,vrem_no)
-                        markup2mas.add(naz,rab_vrem)
-                        bot.send_message(message.chat.id,'Посмотреть записи',reply_markup=vrem_inline)
-                        @bot.callback_query_handler(func=lambda call: call.data == "yes👳🏽‍♂️")
-                        def callHandler99(vrem):
-                                                if vrem.data == 'yes👳🏽‍♂️':
-                                                        markupyes = types.InlineKeyboardMarkup()
-                                                        b = m.Zapis.select(m.Zapis.Date_time).dicts().execute()
-                                                        for i in b:
-                                                                print(i)
-                                                        for i in b:
-                                                                markupyes.add(types.InlineKeyboardButton(text= i['Date_time'].isoformat().split('T')[0]+' '+i['Date_time'].isoformat().split('T')[1],callback_data=i['Date_time'].isoformat().split('T')[0]+' '+i['Date_time'].isoformat().split('T')[1] ))  
-                                                        bot.send_message(vrem.message.chat.id,'Активные записи на данный момент',reply_markup=markupyes)
-                                                elif vrem.data == 'no':
-                                                        pass                      
-                elif message.text == 'Добавление рабочего времени':
-                        markup2mas = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width= 1)
-                        naz = types.KeyboardButton('Назад')
-                        # pattern =r"\d\d\d\d/\d\d?/\d\d? \d\d?:\d\d?" 
-                        # match = re.search(pattern, message.text)
-                        zapisi = types.KeyboardButton('Активные записи')
-                        markup2mas.add(naz,zapisi)
-                        bot.send_message(message.chat.id,'Введите дату и время записи в виде:"ГГГГ/ММ/ДД ЧЧ:ММ"',reply_markup=markup2mas)
-                        # if match:
-                        #         k = m.Session_date(date = message.text)
-                        #         k.save()
-                        #         bot.send_message(message.chat.id,'Запись добавлена')
-                        # else:
-                        #         print (1)
-                elif re.search(r"\d\d\d\d/\d\d?/\d\d? \d\d?:\d\d?", message.text):
-                        k = m.Session_date(date = message.text)
-                        k.save()
-                        bot.send_message(message.chat.id,'Запись добавлена')
                 elif message.text == 'Назад':
                         markup2naz = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width= 1)
                         menua = types.KeyboardButton('Меню')
-    #                    menuadm = types.KeyboardButton('Меню администратора')
-                        menumaster = types.KeyboardButton('Меню мастера')
-                        markup2naz.add(menua,menumaster)
+                        markup2naz.add(menua)
                         bot.send_message(message.chat.id,'Вы вернулись',reply_markup=markup2naz)
                 elif message.text == 'Список процедур':
                         markup3 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width= 1)
@@ -452,7 +406,7 @@ with m.db as db:
                                                                                 k = m.Zapis(Date_time = call.data, procedures_id = '1', master_id = '1', client_id = call.from_user.id)
                                                                                 k.save()
                                                                                 d =  m.Session_date.delete().where(m.Session_date.date == call.data).execute()    
-                                                                                bot.send_message(call.message.chat.id,'Вы успешно записанны')                                                                
+                                                                                bot.send_message(call.message.chat.id,'Вы успешно записанны')                   
                                                 elif obres.data == 'no':
                                                         pass 
                 elif name == message.from_user.first_name and message.text == 'Снятие ресниц👁':
@@ -606,6 +560,45 @@ with m.db as db:
                                                                                 bot.send_message(call.message.chat.id,'Вы успешно записанны')                                                                  
                                                 elif pedsn.data == 'no':
                                                         pass 
+                elif '+79826614260' == number  and message.text == 'Меню мастера':
+                                        markup2mas = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width= 1)
+                                        naz = types.KeyboardButton('Назад')
+                                        rab_vrem = types.KeyboardButton('Добавление рабочего времени')
+                                        zapisi = types.KeyboardButton('Активные записи')
+                                        markup2mas.add(naz,rab_vrem,zapisi)
+                                        bot.send_message(message.chat.id,'Выберите нужную функцию',reply_markup=markup2mas)
+                elif '+79826614260' == number and message.text == 'Активные записи':
+                                        markup2mas = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width= 1)
+                                        naz = types.KeyboardButton('Назад')
+                                        rab_vrem = types.KeyboardButton('Добавление рабочего времени')
+                                        vrem_inline = types.InlineKeyboardMarkup()
+                                        vrem_yes = types.InlineKeyboardButton(text='Да', callback_data = 'yes👳🏽‍♂️')
+                                        vrem_no = types.InlineKeyboardButton(text='Нет', callback_data = 'no')
+                                        vrem_inline.add(vrem_yes,vrem_no)
+                                        markup2mas.add(naz,rab_vrem)
+                                        bot.send_message(message.chat.id,'Посмотреть записи',reply_markup=vrem_inline)
+                                        @bot.callback_query_handler(func=lambda call: call.data == "yes👳🏽‍♂️")
+                                        def callHandler99(vrem):
+                                                if vrem.data == 'yes👳🏽‍♂️':
+                                                        markupyes = types.InlineKeyboardMarkup()
+                                                        b = m.Zapis.select(m.Zapis.Date_time).dicts().execute()
+                                                        for i in b:
+                                                                print(i)
+                                                        for i in b:
+                                                                markupyes.add(types.InlineKeyboardButton(text= i['Date_time'].isoformat().split('T')[0]+' '+i['Date_time'].isoformat().split('T')[1],callback_data=i['Date_time'].isoformat().split('T')[0]+' '+i['Date_time'].isoformat().split('T')[1] ))  
+                                                        bot.send_message(vrem.message.chat.id,'Активные записи на данный момент',reply_markup=markupyes)
+                                                elif vrem.data == 'no':
+                                                        pass                      
+                elif '+79826614260' == number and message.text == 'Добавление рабочего времени':
+                        markup2mas = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width= 1)
+                        naz = types.KeyboardButton('Назад')
+                        zapisi = types.KeyboardButton('Активные записи')
+                        markup2mas.add(naz,zapisi)
+                        bot.send_message(message.chat.id,'Введите дату и время записи в виде:"ГГГГ/ММ/ДД ЧЧ:ММ"',reply_markup=markup2mas)
+                elif re.search(r"\d\d\d\d/\d\d?/\d\d? \d\d?:\d\d?", message.text) and '+79826614260' == number:
+                        k = m.Session_date(date = message.text)
+                        k.save()
+                        bot.send_message(message.chat.id,'Запись добавлена')
                 elif name == message.from_user.first_name and message.text == 'Маникюр💅':
                                         markup7 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width= 1)
                                         manikyrbez = types.KeyboardButton('Маникюр без покрытия💅')
@@ -722,4 +715,5 @@ with m.db as db:
                                                 elif maniksn.data == 'no':
                                                         pass 
         bot.polling(none_stop=True)
-#6363
+except NameError:
+    print("An error occured")
