@@ -54,22 +54,42 @@ with m.db as db:
                         markup2mas = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width= 1)
                         naz = types.KeyboardButton('Назад')
                         rab_vrem = types.KeyboardButton('Рабочее время')
+                        vrem_inline = types.InlineKeyboardMarkup()
+                        vrem_yes = types.InlineKeyboardButton(text='Да', callback_data = 'yes👳🏽‍♂️')
+                        vrem_no = types.InlineKeyboardButton(text='Нет', callback_data = 'no')
+                        vrem_inline.add(vrem_yes,vrem_no)
                         markup2mas.add(naz,rab_vrem)
-                        bot.send_message(message.chat.id,'Выберите нужную функцию',reply_markup=markup2mas)
+                        bot.send_message(message.chat.id,'Посмотреть записи',reply_markup=vrem_inline)
+                        @bot.callback_query_handler(func=lambda call: call.data == "yes👳🏽‍♂️")
+                        def callHandler99(vrem):
+                                                if vrem.data == 'yes👳🏽‍♂️':
+                                                        markupyes = types.InlineKeyboardMarkup()
+                                                        b = m.Zapis.select(m.Zapis.Date_time).dicts().execute()
+                                                        for i in b:
+                                                                print(i)
+                                                        for i in b:
+                                                                markupyes.add(types.InlineKeyboardButton(text= i['Date_time'].isoformat().split('T')[0]+' '+i['Date_time'].isoformat().split('T')[1],callback_data=i['Date_time'].isoformat().split('T')[0]+' '+i['Date_time'].isoformat().split('T')[1] ))  
+                                                        bot.send_message(vrem.message.chat.id,'Активные записи на данный момент',reply_markup=markupyes)
+                                                elif vrem.data == 'no':
+                                                        pass                      
                 elif message.text == 'Рабочее время':
                         markup2mas = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width= 1)
                         naz = types.KeyboardButton('Назад')
-                        pattern = r"\d\d\d\d/\d\d?/\d\d? \d\d?:\d\d?"
-                        #match = re.search(pattern, message.text)
+                        # pattern =r"\d\d\d\d/\d\d?/\d\d? \d\d?:\d\d?" 
+                        # match = re.search(pattern, message.text)
                         zapisi = types.KeyboardButton('Активные записи')
                         markup2mas.add(naz,zapisi)
                         bot.send_message(message.chat.id,'Введите дату и время записи в виде:"ГГГГ/ММ/ДД ЧЧ:ММ"',reply_markup=markup2mas)
-                        if re.findall(pattern,message.text) is not None:
-                                k = m.Session_date(date = message.text)
-                                k.save()
-                                bot.send_message(message.chat.id,'Запись добавлена')
-                        else:
-                                print (1)
+                        # if match:
+                        #         k = m.Session_date(date = message.text)
+                        #         k.save()
+                        #         bot.send_message(message.chat.id,'Запись добавлена')
+                        # else:
+                        #         print (1)
+                elif re.search(r"\d\d\d\d/\d\d?/\d\d? \d\d?:\d\d?", message.text):
+                        k = m.Session_date(date = message.text)
+                        k.save()
+                        bot.send_message(message.chat.id,'Запись добавлена')
                 elif message.text == 'Назад':
                         markup2naz = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width= 1)
                         menua = types.KeyboardButton('Меню')
@@ -305,7 +325,8 @@ with m.db as db:
                                                                         if call.data == i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1]:
                                                                                 k = m.Zapis(Date_time = call.data, procedures_id = '1', master_id = '1', client_id = call.from_user.id)
                                                                                 k.save()
-                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()                                                                  
+                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()     
+                                                                                bot.send_message(call.message.chat.id,'Вы успешно записанны')                                                                
                                                 elif korbrov.data == 'no':
                                                         pass 
                 elif name == message.from_user.first_name and message.text == 'Вернуться в список процедур📜':
@@ -348,7 +369,8 @@ with m.db as db:
                                                                         if call.data == i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1]:
                                                                                 k = m.Zapis(Date_time = call.data, procedures_id = '1', master_id = '1', client_id = call.from_user.id)
                                                                                 k.save()
-                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()                                                                  
+                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()
+                                                                                bot.send_message(call.message.chat.id,'Вы успешно записанны')                                                                  
                                                 elif xny.data == 'no':
                                                         pass 
                 elif name == message.from_user.first_name and message.text == 'Ресницы👁':
@@ -392,7 +414,9 @@ with m.db as db:
                                                                         if call.data == i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1]:
                                                                                 k = m.Zapis(Date_time = call.data, procedures_id = '1', master_id = '1', client_id = call.from_user.id)
                                                                                 k.save()
-                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()                                                                  
+                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()  
+                                                                                bot.send_message(call.message.chat.id,'Вы успешно записанны')
+                                                                                                                                                
                                                 elif res.data == 'no':
                                                         pass 
                 elif name == message.from_user.first_name and message.text == 'Объёмное наращивание ресниц👁':
@@ -427,7 +451,8 @@ with m.db as db:
                                                                         if call.data == i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1]:
                                                                                 k = m.Zapis(Date_time = call.data, procedures_id = '1', master_id = '1', client_id = call.from_user.id)
                                                                                 k.save()
-                                                                                d =  m.Session_date.delete().where(m.Session_date.date == call.data).execute()                                                                 
+                                                                                d =  m.Session_date.delete().where(m.Session_date.date == call.data).execute()    
+                                                                                bot.send_message(call.message.chat.id,'Вы успешно записанны')                                                                
                                                 elif obres.data == 'no':
                                                         pass 
                 elif name == message.from_user.first_name and message.text == 'Снятие ресниц👁':
@@ -461,7 +486,8 @@ with m.db as db:
                                                                         if call.data == i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1]:
                                                                                 k = m.Zapis(Date_time = call.data, procedures_id = '1', master_id = '1', client_id = call.from_user.id)
                                                                                 k.save()
-                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()                                                                  
+                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()   
+                                                                                bot.send_message(call.message.chat.id,'Вы успешно записанны')                                                                  
                                                 elif snres.data == 'no':
                                                         pass 
                 elif name == message.from_user.first_name and message.text == 'Педикюр🦶':
@@ -505,7 +531,8 @@ with m.db as db:
                                                                         if call.data == i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1]:
                                                                                 k = m.Zapis(Date_time = call.data, procedures_id = '1', master_id = '1', client_id = call.from_user.id)
                                                                                 k.save()
-                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()                                                                  
+                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()  
+                                                                                bot.send_message(call.message.chat.id,'Вы успешно записанны')                                                                   
                                                 elif pedbez.data == 'no':
                                                         pass 
                 elif name == message.from_user.first_name and message.text == 'Педикюр с покрытием🦶':
@@ -540,7 +567,8 @@ with m.db as db:
                                                                         if call.data == i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1]:
                                                                                 k = m.Zapis(Date_time = call.data, procedures_id = '1', master_id = '1', client_id = call.from_user.id)
                                                                                 k.save()
-                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()                                                                  
+                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()   
+                                                                                bot.send_message(call.message.chat.id,'Вы успешно записанны')                                                                  
                                                 elif peds.data == 'no':
                                                         pass 
                 elif name == message.from_user.first_name and message.text == 'Снятие педикюра🦶':
@@ -574,7 +602,8 @@ with m.db as db:
                                                                         if call.data == i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1]:
                                                                                 k = m.Zapis(Date_time = call.data, procedures_id = '1', master_id = '1', client_id = call.from_user.id)
                                                                                 k.save()
-                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()                                                                  
+                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()   
+                                                                                bot.send_message(call.message.chat.id,'Вы успешно записанны')                                                                  
                                                 elif pedsn.data == 'no':
                                                         pass 
                 elif name == message.from_user.first_name and message.text == 'Маникюр💅':
@@ -618,7 +647,8 @@ with m.db as db:
                                                                         if call.data == i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1]:
                                                                                 k = m.Zapis(Date_time = call.data, procedures_id = '1', master_id = '1', client_id = call.from_user.id)
                                                                                 k.save()
-                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()                                                                  
+                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()  
+                                                                                bot.send_message(call.message.chat.id,'Вы успешно записанны')                                                                   
                                                 elif manikbez.data == 'no':
                                                         pass 
                 elif name == message.from_user.first_name and message.text == 'Маникюр с покрытием💅':
@@ -653,7 +683,8 @@ with m.db as db:
                                                                         if call.data == i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1]:
                                                                                 k = m.Zapis(Date_time = call.data, procedures_id = '1', master_id = '1', client_id = call.from_user.id)
                                                                                 k.save()
-                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()                                                                  
+                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute() 
+                                                                                bot.send_message(call.message.chat.id,'Вы успешно записанны')                                                                    
                                                 elif maniks.data == 'no':
                                                         pass 
                 elif name == message.from_user.first_name and message.text == 'Снятие маникюра💅':
@@ -686,7 +717,8 @@ with m.db as db:
                                                                         if call.data == i['date'].isoformat().split('T')[0]+' '+i['date'].isoformat().split('T')[1]:
                                                                                 k = m.Zapis(Date_time = call.data, procedures_id = '1', master_id = '1', client_id = call.from_user.id)
                                                                                 k.save()
-                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()                                                                  
+                                                                                d = m.Session_date.delete().where(m.Session_date.date == call.data).execute()  
+                                                                                bot.send_message(call.message.chat.id,'Вы успешно записанны')                                                                   
                                                 elif maniksn.data == 'no':
                                                         pass 
         bot.polling(none_stop=True)
